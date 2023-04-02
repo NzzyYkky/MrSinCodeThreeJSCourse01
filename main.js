@@ -1,5 +1,9 @@
 import './style.css';
 import * as THREE from 'three';
+import * as dat from 'lil-gui';
+
+//ui debug
+const gui = new dat.GUI();
 
 // get canvas
 const canvas = document.querySelector('.webgl');
@@ -34,11 +38,15 @@ renderer.setPixelRatio(window.devicePixelRatio);
 
 // Material
 const material = new THREE.MeshPhysicalMaterial({
-	color: '#3c94d7',
+	color: '#8d0707',
 	metalness: 0.86,
 	roughness: 0.37,
 	flatShading: true,
 });
+
+gui.addColor(material, 'color');
+gui.add(material, 'metalness').min(0).max(1).step(0.01);
+gui.add(material, 'roughness').min(0).max(1).step(0.01);
 
 // Mesh
 const mesh1 = new THREE.Mesh(new THREE.TorusGeometry(1, 0.4, 16, 60), material);
