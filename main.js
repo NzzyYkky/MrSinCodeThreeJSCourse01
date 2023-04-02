@@ -29,6 +29,8 @@ const renderer = new THREE.WebGLRenderer({
 	canvas: canvas,
 	alpha: true,
 });
+renderer.setSize(sizes.width, sizes.height);
+renderer.setPixelRatio(window.devicePixelRatio);
 
 // Material
 const material = new THREE.MeshPhysicalMaterial({
@@ -59,7 +61,26 @@ const directionalLight = new THREE.DirectionalLight('#ffffff', 4);
 directionalLight.position.set(0.5, 1, 0);
 scene.add(directionalLight);
 
-renderer.setSize(sizes.width, sizes.height);
-renderer.setPixelRatio(window.devicePixelRatio);
+// resize
+window.addEventListener('resize', () => {
+	// update size
+	sizes.width = window.innerWidth;
+	sizes.height = window.innerHeight;
 
-renderer.render(scene, camera);
+	// update camera
+	camera.aspect = sizes.width / sizes.height;
+	// need this method.
+	camera.updateProjectionMatrix();
+
+	// update renderer
+	renderer.setSize(sizes.width, sizes.height);
+	renderer.setPixelRatio(window.devicePixelRatio);
+});
+
+// animation
+const animate = () => {
+	renderer.render(scene, camera);
+	window.requestAnimationFrame(animate);
+};
+
+animate();
