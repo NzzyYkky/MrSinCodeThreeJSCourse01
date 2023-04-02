@@ -87,12 +87,28 @@ window.addEventListener('resize', () => {
 	renderer.setPixelRatio(window.devicePixelRatio);
 });
 
-const clock = new THREE.Clock();
+// mouse wheel feature
+let speed = 0;
+let rotation = 0;
+window.addEventListener('wheel', (e) => {
+	speed += e.deltaY * 0.0002;
+});
+
+function rot() {
+	rotation += speed;
+	speed *= 0.93;
+	mesh1.position.x = rotation;
+	window.requestAnimationFrame(rot);
+}
+
+rot();
 
 // animation
+
+const clock = new THREE.Clock();
+
 const animate = () => {
 	renderer.render(scene, camera);
-
 	let getDeltaTime = clock.getDelta();
 
 	// mesh rotation animation
