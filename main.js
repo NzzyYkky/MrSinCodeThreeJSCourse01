@@ -113,6 +113,16 @@ function rot() {
 
 rot();
 
+// get cursor position
+const cursor = {};
+cursor.x = 0;
+cursor.y = 0;
+
+window.addEventListener('mousemove', (e) => {
+	cursor.x = e.clientX / sizes.width - 0.5;
+	cursor.y = e.clientY / sizes.height - 0.5;
+});
+
 // animation
 
 const clock = new THREE.Clock();
