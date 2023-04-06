@@ -137,6 +137,10 @@ const animate = () => {
 		mesh.rotation.y += 0.12 * getDeltaTime;
 	}
 
+	// control camera
+	camera.position.x += cursor.x * getDeltaTime * 2;
+	camera.position.y += -cursor.y * getDeltaTime * 2;
+
 	window.requestAnimationFrame(animate);
 };
 
