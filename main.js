@@ -97,11 +97,31 @@ window.addEventListener('wheel', (e) => {
 function rot() {
 	rotation += speed;
 	speed *= 0.93;
-	mesh1.position.x = rotation;
+	// mesh1.position.x = rotation;
+
+	// whole geometry add animate rotation
+	mesh1.position.x = 2 + 3.8 * Math.cos(rotation);
+	mesh1.position.z = -3 + 3.8 * Math.sin(rotation);
+	mesh2.position.x = 2 + 3.8 * Math.cos(rotation + Math.PI / 2);
+	mesh2.position.z = -3 + 3.8 * Math.sin(rotation + Math.PI / 2);
+	mesh3.position.x = 2 + 3.8 * Math.cos(rotation + Math.PI);
+	mesh3.position.z = -3 + 3.8 * Math.sin(rotation + Math.PI);
+	mesh4.position.x = 2 + 3.8 * Math.cos(rotation + 3 * (Math.PI / 2));
+	mesh4.position.z = -3 + 3.8 * Math.sin(rotation + 3 * (Math.PI / 2));
 	window.requestAnimationFrame(rot);
 }
 
 rot();
+
+// get cursor position
+const cursor = {};
+cursor.x = 0;
+cursor.y = 0;
+
+window.addEventListener('mousemove', (e) => {
+	cursor.x = e.clientX / sizes.width - 0.5;
+	cursor.y = e.clientY / sizes.height - 0.5;
+});
 
 // animation
 
@@ -116,6 +136,10 @@ const animate = () => {
 		mesh.rotation.x += 0.1 * getDeltaTime;
 		mesh.rotation.y += 0.12 * getDeltaTime;
 	}
+
+	// control camera
+	camera.position.x += cursor.x * getDeltaTime * 2;
+	camera.position.y += -cursor.y * getDeltaTime * 2;
 
 	window.requestAnimationFrame(animate);
 };
