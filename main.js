@@ -44,6 +44,32 @@ const material = new THREE.MeshPhysicalMaterial({
 	flatShading: true,
 });
 
+// particle
+// Geometry
+const particlesGeometry = new THREE.BufferGeometry();
+const particlesCount = 700;
+
+const positionArray = new Float32Array(particlesCount * 3);
+
+for (let i = 0; i < particlesCount + 3; i++) {
+	positionArray[i] = (Math.random() - 0.5) * 10;
+}
+
+particlesGeometry.setAttribute(
+	'position',
+	new THREE.BufferAttribute(positionArray, 3)
+);
+
+// material
+const particlesMaterial = new THREE.PointsMaterial({
+	size: 0.025,
+	color: '#fff',
+});
+
+// Mesh
+const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+scene.add(particles);
+
 gui.addColor(material, 'color');
 gui.add(material, 'metalness').min(0).max(1).step(0.01);
 gui.add(material, 'roughness').min(0).max(1).step(0.01);
